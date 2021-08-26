@@ -15,7 +15,6 @@ class Api {
   }
   getUserInformation() {
     //Получаем Промис с данными от сервера
-    console.log("внутри получения=", localStorage.getItem('jwt'))
     return fetch(`${this._baseUrl}/users/me`,{
       method: 'GET',
       headers: {

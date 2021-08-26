@@ -46,8 +46,6 @@ function App() {
       api.getInitialCards()
     ])
       .then(([userData, cardsList])=>{
-        console.log("userData=", userData);
-        console.log("cardsList=", cardsList);
         //Попадаем сюда, только когда оба промиса будут выполнены
         //Устанавливаем полученные данные пользователя
         setCurrentUser(userData.data);
@@ -61,7 +59,6 @@ function App() {
 
   //Проверяем есть ли токен в хранилище (делаем 1 раз при монтировании)
   React.useEffect(() => {
-    console.log("проверяем токен")
     tokenCheck();
   }, []);
 
@@ -70,7 +67,6 @@ function App() {
   function handleCardLike(card) {
     // Снова проверяем, есть ли уже лайк на этой карточке
     const isLiked = card.likes.some(i => toString(i._id)  === toString(currentUser._id));
-    console.log("isLiked", isLiked)
     // Отправляем запрос в API и получаем обновлённые данные карточки
     api.changeLikeCardStatus(card._id, !isLiked)
       .then((newCard) => {
@@ -175,7 +171,6 @@ function App() {
     const jwt = localStorage.getItem('jwt');
     //Если токен есть, то надо залогиниться
     if (jwt) {
-      console.log("token=", jwt)
       auth.checkToken(jwt).then((res) => {
         if (res.data.email) {
           setEmail(res.data.email);

@@ -1,5 +1,5 @@
-//export const BASE_URL = 'https://auth.nomoreparties.co';
-export const BASE_URL = 'http://localhost:3001';
+export const BASE_URL = 'api.mestosquid.nomoredomains.club';
+
 
 //Функция обработки ответа от сервера
 const handleResponse = response => response.ok ? response.json() : Promise.reject(`Ошибка ${response.status}`);

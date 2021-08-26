@@ -1,0 +1,18 @@
+.profile__avatar {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-image: url('../../../images/avatar.jpg');
+}
+
+@media screen and (max-width: 825px) {
+  .profile__avatar {
+    margin-bottom: 26px;
+  }
+}

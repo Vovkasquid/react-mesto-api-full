@@ -52,7 +52,7 @@ function App() {
         //Устанавливаем полученные данные пользователя
         setCurrentUser(userData.data);
         //Передаём карточки в стейт cards
-        setCards(cardsList.data);
+        setCards(cardsList.data.reverse());
       })
       .catch((err)=>{
         console.log(err);

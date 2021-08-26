@@ -7,6 +7,7 @@ const Error404 = require("./errors/Error404");
 const urlValidator = require("./utils/urlValidator");
 const limiter = require("./utils/limiter");
 const { requestLogger, errorLogger } = require("./middlewares/logger");
+const corsMiddleware = require("./middlewares/cors-defend");
 
 const app = express();
 
@@ -42,10 +43,13 @@ app.use(helmet());
 // Включаем логгер запросов
 app.use(requestLogger);
 
+//Подключаем мидлвару для работы с CORS
+app.use(corsMiddleware);
+
 // Маршрут для краша сервера
 app.get('/crash-test', () => {
   setTimeout(() => {
-    throw new Error('Сервер сейчас упадёт');
+    throw new Error("Снова сервер наш упал - это Яндекс всё сломал :D");
   }, 0);
 });
 

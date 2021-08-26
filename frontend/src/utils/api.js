@@ -104,7 +104,7 @@ class Api {
   }
 
   removeLike(cardID) {
-    return fetch(`${this._baseUrl}/cards/likes/${cardID}`, {
+    return fetch(`${this._baseUrl}/cards/${cardID}/likes`, {
       method: 'DELETE',
       headers: {
         authorization: `Bearer ${localStorage.getItem('jwt')}`,

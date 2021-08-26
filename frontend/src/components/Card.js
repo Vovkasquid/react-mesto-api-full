@@ -7,12 +7,8 @@ function Card({card, onCardClick, onCardLike, onCardDelete}) {
   const userInfo = currentUser;
   //Проверяем наша ли карточка
   const isThisCardMine = userInfo._id === card.owner;
-  console.log("userID=", userInfo._id)
-  console.log("card=", card);
-  console.log("cardLikes=", card.likes);
   //Проверяем есть ли наш лайк
-  const isLiked = card.likes.some(i => i._id === currentUser._id);
-  console.log(isLiked);
+  const isLiked = card.likes.some(i => toString(i._id) === toString(currentUser._id));
   const cardLikeButtonClassName = isLiked ? `card__like-button card__like-button_status_active` : `card__like-button`;
 
   return (

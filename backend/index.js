@@ -42,6 +42,13 @@ app.use(helmet());
 // Включаем логгер запросов
 app.use(requestLogger);
 
+// Маршрут для краша сервера
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+});
+
 // Маршруты для регистрации и авторизации
 app.post("/signin", celebrate({
   body: Joi.object().keys({

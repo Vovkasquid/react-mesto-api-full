@@ -34,6 +34,9 @@ mongoose.connect("mongodb://localhost:27017/mestodb", {
 // bodyparser теперь часть экспресса, поэтому подключаем его так
 app.use(express.json());
 
+//Подключаем мидлвару для работы с CORS
+app.use(corsMiddleware);
+
 // Подключаем ограничитель запросов
 app.use(limiter);
 
@@ -43,11 +46,8 @@ app.use(helmet());
 // Включаем логгер запросов
 app.use(requestLogger);
 
-//Подключаем мидлвару для работы с CORS
-app.use(corsMiddleware);
-
 // Маршрут для краша сервера
-app.get('/crash-test', () => {
+app.get("/crash-test", () => {
   setTimeout(() => {
     throw new Error("Снова сервер наш упал - это Яндекс всё сломал :D");
   }, 0);

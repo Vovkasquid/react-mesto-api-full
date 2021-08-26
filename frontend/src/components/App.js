@@ -31,6 +31,9 @@ function App() {
   const [isRegisterPopupOpen, setIsRegisterPopupOpen] = React.useState(false);
   const [isSuccessRegister, setIsSuccessRegister] = React.useState(false);
 
+
+
+
   //При монтировании компонента вызовется этот хук
   //В нём произведём запрос на сервер, чтобы получить новые данные
   React.useEffect(() => {
@@ -43,11 +46,13 @@ function App() {
       api.getInitialCards()
     ])
       .then(([userData, cardsList])=>{
+        console.log("userData=", userData);
+        console.log("cardsList=", cardsList);
         //Попадаем сюда, только когда оба промиса будут выполнены
         //Устанавливаем полученные данные пользователя
-        setCurrentUser(userData);
+        setCurrentUser(userData.data);
         //Передаём карточки в стейт cards
-        setCards(cardsList);
+        setCards(cardsList.data);
       })
       .catch((err)=>{
         console.log(err);
@@ -56,8 +61,10 @@ function App() {
 
   //Проверяем есть ли токен в хранилище (делаем 1 раз при монтировании)
   React.useEffect(() => {
+    console.log("проверяем токен")
     tokenCheck();
   }, []);
+
 
   //Обработчик постановки и удаления лайков
   function handleCardLike(card) {
@@ -113,7 +120,7 @@ function App() {
     api.editProfile(userName, userAbout)
       .then(userData => {
         //Высталяем локально новые данные
-        setCurrentUser(userData);
+        setCurrentUser(userData.data);
         //Закрываем попап
         closeAllPopups();
     })
@@ -126,7 +133,7 @@ function App() {
   const handleUpdateAvatar = (avatar) => {
     api.editAvatar(avatar)
       .then(userData => {
-        setCurrentUser(userData);
+        setCurrentUser(userData.data);
         closeAllPopups();
       })
       .catch((err)=>{
@@ -138,7 +145,7 @@ function App() {
   const handleAddPlace = (place, link) => {
     api.addCard(place, link)
       .then(newCard => {
-        setCards([newCard, ...cards]);
+        setCards([newCard.data, ...cards]);
         closeAllPopups();
       })
       .catch((err)=>{
@@ -168,6 +175,7 @@ function App() {
     const jwt = localStorage.getItem('jwt');
     //Если токен есть, то надо залогиниться
     if (jwt) {
+      console.log("token=", jwt)
       auth.checkToken(jwt).then((res) => {
         if (res.data.email) {
           setEmail(res.data.email);
@@ -186,8 +194,10 @@ function App() {
     auth.authorize(password, email)
       .then(data => {
         //Проверяем, что в ответе есть токен
+        console.log('data в авторизации =', data)
         if (data.token) {
           localStorage.setItem('jwt', data.token);
+          console.log("token в хранилище=", localStorage.getItem('jwt'))
           setLoggedIn(true);
           setEmail(email);
           history.push('/');

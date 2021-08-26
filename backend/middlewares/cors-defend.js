@@ -1,7 +1,9 @@
 // Массив доменов, с которых разрешены кросс-доменные запросы
 const allowedCors = [
-    "mestosquid.nomoredomains.rocks",
-    "localhost:3001"
+    "http://mestosquid.nomoredomains.rocks",
+    "https://mestosquid.nomoredomains.rocks",
+    "http://localhost:3000",
+    "https://localhost:3000",
 ];
 
 module.exports = (req, res, next) => {

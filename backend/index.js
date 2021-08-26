@@ -6,6 +6,7 @@ const helmet = require("helmet");
 const Error404 = require("./errors/Error404");
 const urlValidator = require("./utils/urlValidator");
 const limiter = require("./utils/limiter");
+const { requestLogger, errorLogger } = require("./middlewares/logger");
 
 const app = express();
 
@@ -38,6 +39,9 @@ app.use(limiter);
 // Включаем защиту заголовков
 app.use(helmet());
 
+// Включаем логгер запросов
+app.use(requestLogger);
+
 // Маршруты для регистрации и авторизации
 app.post("/signin", celebrate({
   body: Joi.object().keys({
@@ -63,6 +67,8 @@ app.use("/", cardsRoute);
 app.use("*", (req, res, next) => {
   next(new Error404(`Страницы по адресу ${req.baseUrl} не существует`));
 });
+// Подключаем логгер ошибок
+app.use(errorLogger);
 // Добавим обработчик ошибок для celebrate
 app.use(errors());
 // Добавим обработчик ошибок

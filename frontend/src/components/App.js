@@ -195,10 +195,8 @@ function App() {
     auth.authorize(password, email)
       .then(data => {
         //Проверяем, что в ответе есть токен
-        console.log('data в авторизации =', data)
         if (data.token) {
           localStorage.setItem('jwt', data.token);
-          console.log("token в хранилище=", localStorage.getItem('jwt'))
           setLoggedIn(true);
           setEmail(email);
           history.push('/');

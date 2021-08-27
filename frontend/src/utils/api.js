@@ -120,7 +120,7 @@ class Api {
 }
 
 const api = new Api({
-  baseUrl: 'https://api.mestosquid.nomoredomains.club',
+  baseUrl: 'http://localhost:3001',
 
 });
 

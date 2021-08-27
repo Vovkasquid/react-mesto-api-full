@@ -38,7 +38,7 @@ app.use(express.json());
 app.use(corsMiddleware);
 
 // Подключаем ограничитель запросов
-//app.use(limiter);
+app.use(limiter);
 
 // Включаем защиту заголовков
 app.use(helmet());

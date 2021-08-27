@@ -1,4 +1,5 @@
-export const BASE_URL = 'https://api.mestosquid.nomoredomains.club';
+//export const BASE_URL = 'https://api.mestosquid.nomoredomains.club';
+export const BASE_URL = 'http://localhost:3001';
 
 
 //Функция обработки ответа от сервера

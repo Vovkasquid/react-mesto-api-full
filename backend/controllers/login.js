@@ -28,8 +28,8 @@ const checkLogin = (req, res, next) => {
           const { NODE_ENV, JWT_SECRET } = process.env;
           // Необходимо создать токен и отправить его пользователю
           const token = jwt.sign({ _id: user._id },
-              NODE_ENV === "production" ? JWT_SECRET : "dev-very-secret",
-              { expiresIn: "7d" });
+            NODE_ENV === "production" ? JWT_SECRET : "strongest-key-ever",
+            { expiresIn: "7d" });
           res.send({ token });
         })
         .catch((err) => {

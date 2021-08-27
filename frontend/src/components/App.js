@@ -30,6 +30,8 @@ function App() {
   const [email, setEmail] = React.useState('');
   const [isRegisterPopupOpen, setIsRegisterPopupOpen] = React.useState(false);
   const [isSuccessRegister, setIsSuccessRegister] = React.useState(false);
+  // Стейт для проверки авторизации
+  const [isUserAuth, setIsUserAuth] = React.useState(false);
 
 
 
@@ -37,6 +39,7 @@ function App() {
   //При монтировании компонента вызовется этот хук
   //В нём произведём запрос на сервер, чтобы получить новые данные
   React.useEffect(() => {
+    if (isUserAuth) {
     //Производим запрос на сервер
     Promise.all([
       //Передаём Массив промисов, которые необходимо выполнить
@@ -45,17 +48,18 @@ function App() {
       api.getUserInformation(),
       api.getInitialCards()
     ])
-      .then(([userData, cardsList])=>{
-        //Попадаем сюда, только когда оба промиса будут выполнены
-        //Устанавливаем полученные данные пользователя
-        setCurrentUser(userData.data);
-        //Передаём карточки в стейт cards
-        setCards(cardsList.data.reverse());
-      })
-      .catch((err)=>{
-        console.log(err);
-      })
-  }, []);
+        .then(([userData, cardsList])=>{
+          //Попадаем сюда, только когда оба промиса будут выполнены
+          //Устанавливаем полученные данные пользователя
+          setCurrentUser(userData.data);
+          //Передаём карточки в стейт cards
+          setCards(cardsList.data.reverse());
+        })
+        .catch((err)=>{
+          console.log(err);
+        })
+    }
+  }, [isUserAuth]);
 
   //Проверяем есть ли токен в хранилище (делаем 1 раз при монтировании)
   React.useEffect(() => {
@@ -175,6 +179,8 @@ function App() {
         if (res.data.email) {
           setEmail(res.data.email);
           setLoggedIn(true);
+          // выставляем стейт авторизации
+          setIsUserAuth(true);
           history.push('/');
         }
       })
@@ -196,6 +202,8 @@ function App() {
           setLoggedIn(true);
           setEmail(email);
           history.push('/');
+          // Выставляем стейт, чтобы отрендерить страницу
+          setIsUserAuth(true);
         }
       })
       .catch(err => console.log(err));

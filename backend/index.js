@@ -34,7 +34,7 @@ mongoose.connect("mongodb://localhost:27017/mestodb", {
 // bodyparser теперь часть экспресса, поэтому подключаем его так
 app.use(express.json());
 
-//Подключаем мидлвару для работы с CORS
+// Подключаем мидлвару для работы с CORS
 app.use(corsMiddleware);
 
 // Подключаем ограничитель запросов
